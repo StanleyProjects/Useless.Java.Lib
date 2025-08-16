@@ -1,5 +1,5 @@
 package org.kepocnhh.useless
 
 fun main() {
-//    println("value: ${Useless.getOne()}")
+    println("value: ${Useless.getOne()}")
 }

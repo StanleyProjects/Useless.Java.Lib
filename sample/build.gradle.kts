@@ -20,5 +20,5 @@ tasks.getByName<KotlinCompile>("compileKotlin") {
 }
 
 dependencies {
-//    implementation(project(":lib"))
+    implementation(project(":lib"))
 }
