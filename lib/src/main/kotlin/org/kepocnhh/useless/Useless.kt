@@ -9,7 +9,7 @@ object Useless {
         return getOne() + 1
     }
 
-    private fun getThree(): Int {
+    fun getThree(): Int {
         return getTwo() + 1
     }
 }

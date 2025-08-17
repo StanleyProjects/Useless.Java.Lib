@@ -10,4 +10,11 @@ internal class UselessTest {
         val actual = Useless.getOne()
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun getThreeTest() {
+        val expected = 3
+        val actual = Useless.getThree()
+        assertEquals(expected, actual)
+    }
 }
