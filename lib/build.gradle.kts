@@ -110,3 +110,23 @@ val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
         }
     }
 }
+
+"snapshot".also { variant ->
+    val version = "$version-SNAPSHOT"
+    tasks.create("check", variant, "Readme") {
+        doLast {
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
+                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
+        }
+    }
+}
