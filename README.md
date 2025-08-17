@@ -5,7 +5,7 @@ A few useless Kotlin extensions.
 
 ## Unstable
 
-> GitHub [0.0.1u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.0.1u-SNAPSHOT) release
+> GitHub [0.0.4u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.0.4u-SNAPSHOT) release
 >
 > ...there should be a link to [Maven](https://central.sonatype.com) here
 
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.0.1u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.0.4u-SNAPSHOT")
 }
 ```
 
