@@ -1,14 +1,21 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import sp.gx.core.GitHub
 import sp.gx.core.Maven
 import sp.gx.core.asFile
 import sp.gx.core.assemble
 import sp.gx.core.buildDir
+import sp.gx.core.buildSrc
 import sp.gx.core.check
 import sp.gx.core.create
+import sp.gx.core.dir
+import sp.gx.core.eff
+import sp.gx.core.getByName
+import sp.gx.core.resolve
 import sp.gx.core.task
 
-version = "0.0.1"
+version = "0.6.0"
 
 val maven = Maven.Artifact(
     group = "com.github.kepocnhh",
@@ -16,7 +23,7 @@ val maven = Maven.Artifact(
 )
 
 val gh = GitHub.Repository(
-    owner = "kepocnhh",
+    owner = "StanleyProjects",
     name = rootProject.name,
 )
 
@@ -24,6 +31,9 @@ repositories.mavenCentral()
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    id("org.gradle.jacoco")
+    id("io.gitlab.arturbosch.detekt") version Version.detekt
+    id("org.jetbrains.dokka") version Version.dokka
 }
 
 val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
@@ -33,24 +43,125 @@ val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
     }
 }
 
-"unstable".also { variant ->
-    val version = "${version}u-SNAPSHOT"
-    tasks.create("check", variant, "Readme") {
-        doLast {
-            val expected = setOf(
-                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
-//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
-                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
-                "implementation(\"${maven.moduleName(version)}\")",
-            )
-            rootDir.resolve("README.md").check(
-                expected = expected,
-                report = buildDir()
-                    .dir("reports/analysis/readme")
-                    .asFile("index.html"),
-            )
+tasks.getByName<JavaCompile>("compileTestJava") {
+    targetCompatibility = Version.jvmTarget
+}
+
+tasks.getByName<KotlinCompile>("compileTestKotlin") {
+    kotlinOptions.jvmTarget = Version.jvmTarget
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.jupiter}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}")
+}
+
+fun Test.getExecutionData(): File {
+    return buildDir()
+        .dir("jacoco")
+        .asFile("$name.exec")
+}
+
+val taskUnitTest = task<Test>("checkUnitTest") {
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED") // https://github.com/gradle/gradle/issues/18647
+    doLast {
+        getExecutionData().eff()
+    }
+}
+
+jacoco.toolVersion = Version.jacoco
+
+val taskCoverageReport = task<JacocoReport>("assembleCoverageReport") {
+    dependsOn(taskUnitTest)
+    reports {
+        csv.required = false
+        html.required = true
+        xml.required = false
+    }
+    sourceDirectories.setFrom(file("src/main/kotlin"))
+    classDirectories.setFrom(sourceSets.main.get().output.classesDirs)
+    executionData(taskUnitTest.getExecutionData())
+    doLast {
+        val report = buildDir()
+            .dir("reports/jacoco/$name/html")
+            .eff("index.html")
+        println("Coverage report: ${report.absolutePath}")
+    }
+}
+
+task<JacocoCoverageVerification>("checkCoverage") {
+    dependsOn(taskCoverageReport)
+    violationRules {
+        rule {
+            limit {
+                minimum = BigDecimal(0.96)
+            }
         }
     }
+    classDirectories.setFrom(taskCoverageReport.classDirectories)
+    executionData(taskCoverageReport.executionData)
+}
+
+task<Detekt>("checkCodeQuality") {
+    buildUponDefaultConfig = true
+    allRules = true
+    jvmTarget = Version.jvmTarget
+    val sourceSet = sourceSets.getByName("main")
+    source = sourceSet.allSource
+    val configs = setOf(buildSrc.dir("src/main/resources/detekt").eff("config.yml"))
+    config.setFrom(configs)
+    val report = buildDir()
+        .dir("reports/analysis/code/quality/${sourceSet.name}/html")
+        .asFile("index.html")
+    reports {
+        html {
+            required = true
+            outputLocation = report
+        }
+        md.required = false
+        sarif.required = false
+        txt.required = false
+        xml.required = false
+    }
+    val detektTask = tasks.getByName<Detekt>("detekt", sourceSet.name)
+    classpath.setFrom(detektTask.classpath)
+    doFirst {
+        println("Analysis report: ${report.absolutePath}")
+    }
+}
+
+task<Detekt>("checkDocs") {
+    buildUponDefaultConfig = false
+    allRules = false
+    jvmTarget = Version.jvmTarget
+    val sourceSet = sourceSets.getByName("main")
+    source = sourceSet.allSource
+    val configs = setOf(buildSrc.dir("src/main/resources/detekt").eff("docs.yml"))
+    config.setFrom(configs)
+    val report = buildDir()
+        .dir("reports/analysis/docs/html")
+        .asFile("index.html")
+    reports {
+        html {
+            required = true
+            outputLocation = report
+        }
+        md.required = false
+        sarif.required = false
+        txt.required = false
+        xml.required = false
+    }
+    val detektTask = tasks.getByName<Detekt>("detekt", sourceSet.name)
+    classpath.setFrom(detektTask.classpath)
+    doFirst {
+        println("Analysis report: ${report.absolutePath}")
+    }
+}
+
+fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Repository) {
     tasks.create("assemble", variant, "MavenMetadata") {
         doLast {
             val file = buildDir()
@@ -83,7 +194,7 @@ val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
         doLast {
             val file = buildDir()
                 .dir("libs")
-                .file("${maven.name(version)}.pom")
+                .file("${maven.name(version = version)}.pom")
                 .assemble(
                     maven.pom(
                         version = version,
@@ -107,6 +218,88 @@ val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
                     """.trimIndent(),
                 )
             println("Metadata: ${file.absolutePath}")
+        }
+    }
+}
+
+"unstable".also { variant ->
+    val version = "${version}u-SNAPSHOT"
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("check", variant, "Readme") {
+        doLast {
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
+                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
+        }
+    }
+}
+
+"snapshot".also { variant ->
+    val version = "$version-SNAPSHOT"
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("check", variant, "Readme") {
+        doLast {
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
+                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
+        }
+    }
+}
+
+"release".also { variant ->
+    val version = version.toString()
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("check", variant, "Readme") {
+        doLast {
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven release url
+//                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven release import
+                "implementation(\"${maven.moduleName(version)}\")",
+                "gradle lib:assembleReleaseJar", // todo
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
+        }
+    }
+    task<DokkaTask>("assemble", variant, "Docs") {
+        outputDirectory = buildDir().dir("docs/$variant")
+        moduleName = gh.name
+        moduleVersion = version
+        dokkaSourceSets.getByName("main") {
+            val path = "src/$name/kotlin"
+            reportUndocumented = false
+            sourceLink {
+                localDirectory = file(path)
+                remoteUrl = gh.url().resolve("tree", moduleVersion.get(), "lib", path)
+            }
+            jdkVersion = Version.jvmTarget.toInt()
+        }
+        doLast {
+            val index = outputDirectory.get().eff("index.html")
+            println("Docs: ${index.absolutePath}")
         }
     }
 }
