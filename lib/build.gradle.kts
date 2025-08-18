@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import sp.gx.core.GitHub
 import sp.gx.core.Maven
@@ -11,6 +12,7 @@ import sp.gx.core.create
 import sp.gx.core.dir
 import sp.gx.core.eff
 import sp.gx.core.getByName
+import sp.gx.core.resolve
 import sp.gx.core.task
 
 version = "0.6.0"
@@ -31,6 +33,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.gradle.jacoco")
     id("io.gitlab.arturbosch.detekt") version Version.detekt
+    id("org.jetbrains.dokka") version Version.dokka
 }
 
 val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
@@ -130,7 +133,35 @@ task<Detekt>("checkCodeQuality") {
     }
 }
 
-fun tasks(variant: String, version: String) {
+task<Detekt>("checkDocs") {
+    buildUponDefaultConfig = false
+    allRules = false
+    jvmTarget = Version.jvmTarget
+    val sourceSet = sourceSets.getByName("main")
+    source = sourceSet.allSource
+    val configs = setOf(buildSrc.dir("src/main/resources/detekt").eff("docs.yml"))
+    config.setFrom(configs)
+    val report = buildDir()
+        .dir("reports/analysis/docs/html")
+        .asFile("index.html")
+    reports {
+        html {
+            required = true
+            outputLocation = report
+        }
+        md.required = false
+        sarif.required = false
+        txt.required = false
+        xml.required = false
+    }
+    val detektTask = tasks.getByName<Detekt>("detekt", sourceSet.name)
+    classpath.setFrom(detektTask.classpath)
+    doFirst {
+        println("Analysis report: ${report.absolutePath}")
+    }
+}
+
+fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Repository) {
     tasks.create("assemble", variant, "MavenMetadata") {
         doLast {
             val file = buildDir()
@@ -163,7 +194,7 @@ fun tasks(variant: String, version: String) {
         doLast {
             val file = buildDir()
                 .dir("libs")
-                .file("${maven.name(version)}.pom")
+                .file("${maven.name(version = version)}.pom")
                 .assemble(
                     maven.pom(
                         version = version,
@@ -193,7 +224,7 @@ fun tasks(variant: String, version: String) {
 
 "unstable".also { variant ->
     val version = "${version}u-SNAPSHOT"
-    tasks(variant = variant, version = version)
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -214,7 +245,7 @@ fun tasks(variant: String, version: String) {
 
 "snapshot".also { variant ->
     val version = "$version-SNAPSHOT"
-    tasks(variant = variant, version = version)
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -235,7 +266,7 @@ fun tasks(variant: String, version: String) {
 
 "release".also { variant ->
     val version = version.toString()
-    tasks(variant = variant, version = version)
+    tasks(variant = variant, version = version, maven = maven, gh = gh)
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -250,6 +281,24 @@ fun tasks(variant: String, version: String) {
                     .dir("reports/analysis/readme")
                     .asFile("index.html"),
             )
+        }
+    }
+    task<DokkaTask>("assemble", variant, "Docs") {
+        outputDirectory = buildDir().dir("docs/$variant")
+        moduleName = gh.name
+        moduleVersion = version
+        dokkaSourceSets.getByName("main") {
+            val path = "src/$name/kotlin"
+            reportUndocumented = false
+            sourceLink {
+                localDirectory = file(path)
+                remoteUrl = gh.url().resolve("tree", moduleVersion.get(), "lib", path)
+            }
+            jdkVersion = Version.jvmTarget.toInt()
+        }
+        doLast {
+            val index = outputDirectory.get().eff("index.html")
+            println("Docs: ${index.absolutePath}")
         }
     }
 }
