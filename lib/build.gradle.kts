@@ -130,24 +130,7 @@ task<Detekt>("checkCodeQuality") {
     }
 }
 
-"unstable".also { variant ->
-    val version = "${version}u-SNAPSHOT"
-    tasks.create("check", variant, "Readme") {
-        doLast {
-            val expected = setOf(
-                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
-//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
-                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
-                "implementation(\"${maven.moduleName(version)}\")",
-            )
-            rootDir.resolve("README.md").check(
-                expected = expected,
-                report = buildDir()
-                    .dir("reports/analysis/readme")
-                    .asFile("index.html"),
-            )
-        }
-    }
+fun tasks(variant: String, version: String) {
     tasks.create("assemble", variant, "MavenMetadata") {
         doLast {
             val file = buildDir()
@@ -208,8 +191,9 @@ task<Detekt>("checkCodeQuality") {
     }
 }
 
-"snapshot".also { variant ->
-    val version = "$version-SNAPSHOT"
+"unstable".also { variant ->
+    val version = "${version}u-SNAPSHOT"
+    tasks(variant = variant, version = version)
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -226,62 +210,46 @@ task<Detekt>("checkCodeQuality") {
             )
         }
     }
-    tasks.create("assemble", variant, "Metadata") {
+}
+
+"snapshot".also { variant ->
+    val version = "$version-SNAPSHOT"
+    tasks(variant = variant, version = version)
+    tasks.create("check", variant, "Readme") {
         doLast {
-            val file = buildDir()
-                .dir("yml")
-                .file("metadata.yml")
-                .assemble(
-                    """
-                        repository:
-                         owner: '${gh.owner}'
-                         name: '${gh.name}'
-                        version: '$version'
-                    """.trimIndent(),
-                )
-            println("Metadata: ${file.absolutePath}")
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven url
+                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven import
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
         }
     }
-    tasks.create("assemble", variant, "MavenMetadata") {
+}
+
+"release".also { variant ->
+    val version = version.toString()
+    tasks(variant = variant, version = version)
+    tasks.create("check", variant, "Readme") {
         doLast {
-            val file = buildDir()
-                .dir("yml")
-                .file("maven-metadata.yml")
-                .assemble(
-                    """
-                        repository:
-                         groupId: '${maven.group}'
-                         artifactId: '${maven.id}'
-                        version: '$version'
-                    """.trimIndent(),
-                )
-            println("Metadata: ${file.absolutePath}")
-        }
-    }
-    task<Jar>("assemble", variant, "Jar") {
-        dependsOn(compileKotlinTask)
-        archiveBaseName = maven.id
-        archiveVersion = version
-        from(compileKotlinTask.destinationDirectory.asFileTree)
-    }
-    task<Jar>("assemble", variant, "Source") {
-        archiveBaseName = maven.id
-        archiveVersion = version
-        archiveClassifier = "sources"
-        from(sourceSets.main.get().allSource)
-    }
-    tasks.create("assemble", variant, "Pom") {
-        doLast {
-            val file = buildDir()
-                .dir("libs")
-                .file("${maven.name(version)}.pom")
-                .assemble(
-                    maven.pom(
-                        version = version,
-                        packaging = "jar",
-                    ),
-                )
-            println("POM: ${file.absolutePath}")
+            val expected = setOf(
+                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
+//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven release url
+//                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven release import
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
         }
     }
 }
