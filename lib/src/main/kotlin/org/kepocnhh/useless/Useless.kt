@@ -1,15 +1,17 @@
 package org.kepocnhh.useless
 
 object Useless {
+    private const val One = 1
+
     fun getOne(): Int {
-        return 1
+        return One
     }
 
     private fun getTwo(): Int {
-        return getOne() + 1
+        return getOne() + One
     }
 
-    private fun getThree(): Int {
-        return getTwo() + 1
+    fun getThree(): Int {
+        return getTwo() + One
     }
 }
