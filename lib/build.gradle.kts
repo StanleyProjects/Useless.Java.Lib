@@ -274,6 +274,7 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
 //                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven release url
 //                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven release import
                 "implementation(\"${maven.moduleName(version)}\")",
+                "gradle lib:assembleReleaseJar", // todo
             )
             rootDir.resolve("README.md").check(
                 expected = expected,
