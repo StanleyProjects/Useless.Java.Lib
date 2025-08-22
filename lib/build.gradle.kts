@@ -284,7 +284,7 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
             )
         }
     }
-    task<DokkaTask>("assemble", variant, "Docs") {
+    val docsTask = task<DokkaTask>("assemble", variant, "Docs") {
         outputDirectory = buildDir().dir("docs/$variant")
         moduleName = gh.name
         moduleVersion = version
@@ -301,5 +301,12 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
             val index = outputDirectory.get().eff("index.html")
             println("Docs: ${index.absolutePath}")
         }
+    }
+    task<Jar>("assemble", variant, "Javadoc") {
+        dependsOn(docsTask)
+        archiveBaseName = maven.id
+        archiveVersion = version
+        archiveClassifier = "javadoc"
+        from(docsTask.outputDirectory)
     }
 }
