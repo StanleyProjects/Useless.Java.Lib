@@ -182,14 +182,6 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
         archiveClassifier = "sources"
         from(sourceSets.main.get().allSource)
     }
-    tasks.create("assemble", variant, "Pom") {
-        doLast {
-            val target = buildDir().dir("libs").file("${maven.name(version = version)}.pom")
-            val text = maven.pom(version = version, packaging = "jar")
-            val file = target.assemble(text = text)
-            println("POM: ${file.absolutePath}")
-        }
-    }
     tasks.create("assemble", variant, "Metadata") {
         doLast {
             val target = buildDir().dir("yml").file("metadata.yml")
@@ -202,6 +194,14 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
 "unstable".also { variant ->
     val version = "${version}u-SNAPSHOT"
     tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("assemble", variant, "Pom") {
+        doLast {
+            val target = buildDir().dir("libs").file("${maven.name(version = version)}.pom")
+            val text = maven.pom(version = version, packaging = "jar")
+            val file = target.assemble(text = text)
+            println("POM: ${file.absolutePath}")
+        }
+    }
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -224,6 +224,14 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
 "snapshot".also { variant ->
     val version = "$version-SNAPSHOT"
     tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("assemble", variant, "Pom") {
+        doLast {
+            val target = buildDir().dir("libs").file("${maven.name(version = version)}.pom")
+            val text = maven.pom(version = version, packaging = "jar")
+            val file = target.assemble(text = text)
+            println("POM: ${file.absolutePath}")
+        }
+    }
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
@@ -246,6 +254,24 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
 "release".also { variant ->
     val version = version.toString()
     tasks(variant = variant, version = version, maven = maven, gh = gh)
+    tasks.create("assemble", variant, "Pom") {
+        doLast {
+            val target = buildDir().dir("libs").file("${maven.name(version = version)}.pom")
+            val license = URI("${gh.uri()}/blob/$version/LICENSE")
+            val developer = "Stanley Wintergreen" // todo
+            val text = maven.pom(
+                version = version,
+                packaging = "jar",
+                uri = gh.uri(),
+                licenses = setOf(license),
+                scm = gh.uri(),
+                tag = version,
+                developers = setOf(developer),
+            )
+            val file = target.assemble(text = text)
+            println("POM: ${file.absolutePath}")
+        }
+    }
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
