@@ -5,7 +5,7 @@ A few useless Kotlin extensions.
 
 ## Release
 
-> GitHub [0.6.0](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.6.0) release
+> GitHub [0.6.1](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.6.1) release
 >
 > ...there should be a link to [Maven](https://central.sonatype.com) here
 
@@ -17,7 +17,7 @@ $ gradle lib:assembleReleaseJar
 ### Import
 ```kotlin
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.6.0")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.6.1")
 }
 ```
 
