@@ -275,11 +275,12 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
     tasks.create("check", variant, "Readme") {
         doLast {
             val expected = setOf(
-                "GitHub [$version](https://github.com/${gh.owner}/${gh.name}/releases/tag/$version)", // todo GitHub release
-//                Markdown.link("Maven", Maven.Snapshot.url(maven, version)), // todo maven release url
-//                "maven(\"https://central.sonatype.com/repository/maven-snapshots\")", // todo maven release import
-                "implementation(\"${maven.moduleName(version)}\")",
-                "gradle lib:assembleReleaseJar", // todo
+                Markdown.link(text = "GitHub", uri = gh.release(version = version)),
+//                "Maven ${Markdown.link(text = version, uri = maven.uri(version = version))}", // todo
+                Markdown.link(text = "Maven", uri = URI("https://central.sonatype.com/artifact/${maven.group}/${maven.id}/$version")), // todo
+                Markdown.link(text = "Docs", uri = URI("${gh.pages()}/docs/$version")), // todo docs
+                "implementation(\"${maven.moduleName(version = version)}\")",
+                "gradle lib:assemble${variant.replaceFirstChar(Char::titlecase)}Jar",
             )
             rootDir.resolve("README.md").check(
                 expected = expected,
