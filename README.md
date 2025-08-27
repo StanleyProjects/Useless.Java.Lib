@@ -3,15 +3,36 @@ A few useless Kotlin extensions.
 
 ---
 
-## Snapshot
+## Release
 
-> GitHub [0.5.0-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.5.0-SNAPSHOT) release
->
-> ...there should be a link to [Maven](https://central.sonatype.com) here
+`0.6.15`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.6.15)
+| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.6.15)
+| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.6.15)
 
 ### Build
 ```
-$ gradle lib:assembleUnstableJar
+$ gradle lib:assembleReleaseJar
+```
+
+### Import
+```kotlin
+dependencies {
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.6.15")
+}
+```
+
+---
+
+## Snapshot
+
+> GitHub [0.7.1-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.1-SNAPSHOT) release
+>
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+
+### Build
+```
+$ gradle lib:assembleSnapshotJar
 ```
 
 ### Import
@@ -21,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.5.0-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.1-SNAPSHOT")
 }
 ```
 
@@ -29,9 +50,9 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.3.1u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.3.1u-SNAPSHOT) release
+> GitHub [0.7.1u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.1u-SNAPSHOT) release
 >
-> ...there should be a link to [Maven](https://central.sonatype.com) here
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
 ```
@@ -45,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.3.1u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.1u-SNAPSHOT")
 }
 ```
 
