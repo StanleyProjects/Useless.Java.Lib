@@ -28,7 +28,7 @@ dependencies {
 
 > GitHub [0.5.0-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.5.0-SNAPSHOT) release
 >
-> ...there should be a link to [Maven](https://central.sonatype.com) here
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
 ```
@@ -50,9 +50,9 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.3.1u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.3.1u-SNAPSHOT) release
+> GitHub [0.7.0u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.0u-SNAPSHOT) release
 >
-> ...there should be a link to [Maven](https://central.sonatype.com) here
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
 ```
@@ -66,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.3.1u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.0u-SNAPSHOT")
 }
 ```
 
