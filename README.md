@@ -26,7 +26,7 @@ dependencies {
 
 ## Snapshot
 
-> GitHub [0.5.0-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.5.0-SNAPSHOT) release
+> GitHub [0.7.1-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.1-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.5.0-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.1-SNAPSHOT")
 }
 ```
 
