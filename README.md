@@ -5,10 +5,10 @@ A few useless Kotlin extensions.
 
 ## Release
 
-`0.7.1`
-| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.1)
-| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.7.1)
-| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.7.1)
+`0.7.2`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.2)
+| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.7.2)
+| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.7.2)
 
 ### Build
 ```
@@ -18,7 +18,7 @@ $ gradle lib:assembleReleaseJar
 ### Import
 ```kotlin
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.1")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.2")
 }
 ```
 
