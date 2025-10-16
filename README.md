@@ -5,10 +5,10 @@ A few useless Kotlin extensions.
 
 ## Release
 
-`0.7.1`
-| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.1)
-| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.7.1)
-| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.7.1)
+`0.7.2`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.2)
+| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.7.2)
+| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.7.2)
 
 ### Build
 ```
@@ -18,7 +18,7 @@ $ gradle lib:assembleReleaseJar
 ### Import
 ```kotlin
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.1")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.2")
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ## Snapshot
 
-> GitHub [0.7.2-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.2-SNAPSHOT) release
+> GitHub [0.8.0-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.8.0-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.2-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.8.0-SNAPSHOT")
 }
 ```
 
@@ -50,7 +50,7 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.7.2u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.7.2u-SNAPSHOT) release
+> GitHub [0.8.0u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.8.0u-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
@@ -66,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.7.2u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.8.0u-SNAPSHOT")
 }
 ```
 
