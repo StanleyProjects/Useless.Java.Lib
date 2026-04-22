@@ -53,9 +53,9 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.11.3u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3u-SNAPSHOT) release
->
-> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+`0.11.3u-SNAPSHOT`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3u-SNAPSHOT)
+| [Maven](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
 ```
