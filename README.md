@@ -5,10 +5,10 @@ A few useless Kotlin extensions.
 
 ## Release
 
-`0.10.0`
-| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.10.0)
-| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.10.0)
-| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.10.0)
+`0.11.2`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2)
+| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.11.2)
+| [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.11.2)
 
 ### Build
 ```
@@ -18,7 +18,7 @@ $ gradle lib:assembleReleaseJar
 ### Import
 ```kotlin
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.10.0")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.2")
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ## Snapshot
 
-> GitHub [0.9.2-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.9.2-SNAPSHOT) release
+> GitHub [0.11.2-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.9.2-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.2-SNAPSHOT")
 }
 ```
 
@@ -50,7 +50,7 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.9.2u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.9.2u-SNAPSHOT) release
+> GitHub [0.11.2u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2u-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
@@ -66,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.9.2u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.2u-SNAPSHOT")
 }
 ```
 
