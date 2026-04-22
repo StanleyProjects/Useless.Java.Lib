@@ -9,6 +9,7 @@ A few useless Kotlin extensions.
 | [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2)
 | [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.11.2)
 | [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.11.2)
+| [Key](https://StanleyProjects.github.io/release-public.pem)
 
 ### Build
 ```
@@ -26,9 +27,11 @@ dependencies {
 
 ## Snapshot
 
-> GitHub [0.11.2-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2-SNAPSHOT) release
+> GitHub [0.11.3-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+>
+> Public [key](https://StanleyProjects.github.io/debug-public.pem)
 
 ### Build
 ```
@@ -42,7 +45,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.2-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.3-SNAPSHOT")
 }
 ```
 
@@ -50,9 +53,9 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.11.3u-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3u-SNAPSHOT) release
->
-> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+`0.11.4u-SNAPSHOT`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.4u-SNAPSHOT)
+| [Maven](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
 ```
@@ -66,7 +69,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.3u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.4u-SNAPSHOT")
 }
 ```
 
