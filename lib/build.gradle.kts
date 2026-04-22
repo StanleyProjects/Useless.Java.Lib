@@ -285,6 +285,7 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
                 Markdown.link(text = "GitHub", uri = gh.release(version = version)),
                 Markdown.link(text = "Maven", uri = maven.uri(version = version)),
                 Markdown.link(text = "Docs", uri = gh.pages("docs/$version")),
+                Markdown.link(text = "Key", uri = GitHub.pages(gh.owner, "debug-public.pem")),
                 "implementation(\"${maven.moduleName(version = version)}\")",
                 "gradle lib:assemble${variant.ufc()}Jar",
             )
