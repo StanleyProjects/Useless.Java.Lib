@@ -189,7 +189,7 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
         archiveClassifier = "sources"
         from(sourceSets.main.get().allSource)
     }
-    tasks.register("assemble${variant}Metadata") {
+    tasks.register("assemble${variant.ufc()}Metadata") {
         doLast {
             val target = buildDir().dir("yml").file("metadata.yml")
             val file = gh.assemble(version = version, target = target)
