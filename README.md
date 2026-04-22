@@ -9,6 +9,7 @@ A few useless Kotlin extensions.
 | [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2)
 | [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Useless.Java.Lib/0.11.2)
 | [Docs](https://StanleyProjects.github.io/Useless.Java.Lib/docs/0.11.2)
+| [Key](https://StanleyProjects.github.io/release-public.pem)
 
 ### Build
 ```
