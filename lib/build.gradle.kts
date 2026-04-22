@@ -14,7 +14,7 @@ import sp.kx.gradlex.eff
 import sp.kx.gradlex.ufc
 import java.net.URI
 
-version = "0.11.2"
+version = "0.11.4"
 
 val maven = Maven.Artifact(
     group = "com.github.kepocnhh",
@@ -212,11 +212,11 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
     tasks.register("check${variant.ufc()}Readme") {
         doLast {
             val expected = setOf(
-                "GitHub ${Markdown.link(text = version, uri = gh.release(version = version))}",
-                "Maven ${Markdown.link("metadata", Maven.Snapshot.metadata(artifact = maven))}",
+                Markdown.link(text = "GitHub", uri = gh.release(version = version)),
+                Markdown.link(text = "Maven", uri = Maven.Snapshot.metadata(artifact = maven)),
                 "maven(\"${Maven.Snapshot.Host}\")",
                 "implementation(\"${maven.moduleName(version = version)}\")",
-                "gradle lib:assemble${variant.replaceFirstChar(Char::titlecase)}Jar",
+                "gradle lib:assemble${variant.ufc()}Jar",
             )
             rootDir.resolve("README.md").check(
                 expected = expected,
@@ -242,11 +242,12 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
     tasks.register("check${variant.ufc()}Readme") {
         doLast {
             val expected = setOf(
-                "GitHub ${Markdown.link(text = version, uri = gh.release(version = version))}",
-                "Maven ${Markdown.link("metadata", Maven.Snapshot.metadata(artifact = maven))}",
+                Markdown.link(text = "GitHub", uri = gh.release(version = version)),
+                Markdown.link(text = "Maven", uri = Maven.Snapshot.metadata(artifact = maven)),
+                Markdown.link(text = "Key", uri = GitHub.pages(gh.owner, "debug-public.pem")),
                 "maven(\"${Maven.Snapshot.Host}\")",
                 "implementation(\"${maven.moduleName(version = version)}\")",
-                "gradle lib:assemble${variant.replaceFirstChar(Char::titlecase)}Jar",
+                "gradle lib:assemble${variant.ufc()}Jar",
             )
             rootDir.resolve("README.md").check(
                 expected = expected,
@@ -284,8 +285,9 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
                 Markdown.link(text = "GitHub", uri = gh.release(version = version)),
                 Markdown.link(text = "Maven", uri = maven.uri(version = version)),
                 Markdown.link(text = "Docs", uri = gh.pages("docs/$version")),
+                Markdown.link(text = "Key", uri = GitHub.pages(gh.owner, "release-public.pem")),
                 "implementation(\"${maven.moduleName(version = version)}\")",
-                "gradle lib:assemble${variant.replaceFirstChar(Char::titlecase)}Jar",
+                "gradle lib:assemble${variant.ufc()}Jar",
             )
             rootDir.resolve("README.md").check(
                 expected = expected,
