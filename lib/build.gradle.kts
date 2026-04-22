@@ -244,6 +244,7 @@ fun tasks(variant: String, version: String, maven: Maven.Artifact, gh: GitHub.Re
             val expected = setOf(
                 "GitHub ${Markdown.link(text = version, uri = gh.release(version = version))}",
                 "Maven ${Markdown.link("metadata", Maven.Snapshot.metadata(artifact = maven))}",
+                "Public ${Markdown.link("key", GitHub.pages(gh.owner, "debug-public.pem"))}",
                 "maven(\"${Maven.Snapshot.Host}\")",
                 "implementation(\"${maven.moduleName(version = version)}\")",
                 "gradle lib:assemble${variant.ufc()}Jar",
