@@ -53,8 +53,8 @@ dependencies {
 
 ## Unstable
 
-`0.11.3u-SNAPSHOT`
-| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3u-SNAPSHOT)
+`0.11.4u-SNAPSHOT`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.4u-SNAPSHOT)
 | [Maven](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
 
 ### Build
@@ -69,7 +69,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.3u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Useless.Java.Lib:0.11.4u-SNAPSHOT")
 }
 ```
 
