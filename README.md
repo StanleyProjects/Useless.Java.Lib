@@ -27,11 +27,10 @@ dependencies {
 
 ## Snapshot
 
-> GitHub [0.11.3-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3-SNAPSHOT) release
->
-> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
->
-> Public [key](https://StanleyProjects.github.io/debug-public.pem)
+`0.11.3-SNAPSHOT`
+| [GitHub](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.3-SNAPSHOT)
+| [Maven](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+| [Key](https://StanleyProjects.github.io/debug-public.pem)
 
 ### Build
 ```
