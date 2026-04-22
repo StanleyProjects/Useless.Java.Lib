@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:org.kepocnhh.useless////PointingToDeclaration/-useless.-java.-lib/org.kepocnhh.useless/index.html
+$dokka.location:org.kepocnhh.useless/Useless///PointingToDeclaration/-useless.-java.-lib/org.kepocnhh.useless/-useless/index.html
+$dokka.location:org.kepocnhh.useless/Useless/getOne/#/PointingToDeclaration/-useless.-java.-lib/org.kepocnhh.useless/-useless/get-one.html
+$dokka.location:org.kepocnhh.useless/Useless/getThree/#/PointingToDeclaration/-useless.-java.-lib/org.kepocnhh.useless/-useless/get-three.html
+org.kepocnhh.useless
+
