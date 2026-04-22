@@ -29,6 +29,8 @@ dependencies {
 > GitHub [0.11.2-SNAPSHOT](https://github.com/StanleyProjects/Useless.Java.Lib/releases/tag/0.11.2-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Useless.Java.Lib/maven-metadata.xml)
+>
+> Public [key](https://StanleyProjects.github.io/debug-public.pem)
 
 ### Build
 ```
